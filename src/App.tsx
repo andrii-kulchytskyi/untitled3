@@ -16,8 +16,10 @@ function App() {
     ]);
     let [filter, setFilter] = useState<FilterValues>("all")
 
-    const addTask = () => {
-
+    const addTask = (title: string) => {
+        let newTask = {id: v1(), title: title, isDone: false}
+        let newTasks = [newTask, ...tasks]
+        setTask(newTasks)
     }
 
     const removeTask = (id: string) => {
@@ -41,6 +43,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+
             />
         </div>
     );
