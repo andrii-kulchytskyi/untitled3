@@ -9,6 +9,7 @@ export type PropsTodoList = {
     changeFilter: (value: FilterValues) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskID: string, isDone: boolean) => void
+    filter: FilterValues
 }
 export type TaskType = {
     id: string
