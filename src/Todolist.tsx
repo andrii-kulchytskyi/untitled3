@@ -8,6 +8,7 @@ export type PropsTodoList = {
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValues) => void
     addTask: (title: string) => void
+    changeTaskStatus: (taskID: string, isDone: boolean) => void
 }
 export type TaskType = {
     id: string
@@ -32,8 +33,8 @@ export const Todolist = (props: PropsTodoList) => {
     const onClickActiveFiltersHandler = () => props.changeFilter("active")
     const onClickCompletedFiltersHandler = () => props.changeFilter("completed")
 
-
     return (
+
         <div>
             <h3>{props.title}</h3>
             <input onChange={onChangeHandler}
@@ -42,12 +43,27 @@ export const Todolist = (props: PropsTodoList) => {
             <button onClick={addTaskHandler}>+
             </button>
             <ul>
-                {props.tasks.map(el => <li>
-                    <div><input type={"checkbox"}
-                                checked={el.isDone}></input><span>{el.title}</span>
-                        <button onClick={() => props.removeTask(el.id)}>x</button>
-                    </div>
-                </li>)}
+                {
+                    props.tasks.map(
+                        el => {
+
+                            const onClickButtonRemove = () => props.removeTask(el.id)
+
+                            const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
+                                props.changeTaskStatus(el.id, e.currentTarget.checked)
+                            }
+                            return (
+                                <li>
+                                    <div><input type={"checkbox"}
+                                                checked={el.isDone}
+                                                onChange={changeTaskStatus}></input><span>{el.title}</span>
+                                        <button onClick={onClickButtonRemove}>x</button>
+                                    </div>
+                                </li>
+                            )
+                        }
+                    )
+                }
             </ul>
             <div>
                 <button onClick={onClickAllFiltersHandler}>All</button>
